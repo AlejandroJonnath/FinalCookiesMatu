@@ -58,16 +58,12 @@ public class CategoriaRepositoryJdbcImplemt implements Repository<Categoria> {
             sql="insert into categoria(nombre, descripcion, condicion)VALUES(?,?,1)";
         }
         try(PreparedStatement stmt = conn.prepareStatement(sql)){
-            if (categoria.getIdCategoria()!=null && categoria.getIdCategoria()>0){
+
                 stmt.setString(1, categoria.getNombre());
                 stmt.setString(2, categoria.getDescripcion());
-                stmt.setLong(3, categoria.getIdCategoria());
-            }else{
-                stmt.setString(1, categoria.getNombre());
-                stmt.setString(2, categoria.getDescripcion());
-            }
-
-
+                if (categoria.getIdCategoria()!=null && categoria.getIdCategoria()>0) {
+                    stmt.setLong(3, categoria.getIdCategoria());
+                }
 
             //stmt.setInt(3, categoria.getCondicion());
             stmt.executeUpdate();
